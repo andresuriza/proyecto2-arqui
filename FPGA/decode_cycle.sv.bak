@@ -1,0 +1,35 @@
+module decode_cycle(input logic clk, rst, RegWriteW,
+							input logic [4:0] RDW,
+							input logic [31:0] InstrD, PCD, PCPlus4D, ResultW);
+
+		logic RegWriteD;
+		logic [1:0] ImmSrcD;
+							
+		Control_Unit_Top control(.Op(InstrD[6:0]),
+										 .RegWrite(RegWriteD),
+										 .ImmSrc(ImmSrcD),
+										 .ALUSrc(),
+										 .MemWrite(),
+										 .ResultSrc(),
+										 .Branch(),
+										 .funct3(),
+										 .funct7(),
+										 .ALUControl());
+										 
+		Register_File rf(.clk(clk),
+							  .rst(rst),
+							  .WE3(RegWriteW),
+							  .WD3(ResultW),
+							  .A1(),
+							  .A2(),
+							  .A3(RDW),
+							  .RD1(),
+							  .RD2());
+		
+		Sign_Extend extension(.In(),
+									 .Imm_Ext(),
+									 .ImmSrc(ImmSrcD));
+		
+		
+							
+endmodule
