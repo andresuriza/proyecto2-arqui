@@ -14,8 +14,7 @@ module Main_Decoder(input logic [6:0] Op,
                                            1'b0 ;
     assign ResultSrc = (Op == 7'b0000011) ? 1'b1 :
                                             1'b0 ;
-    assign Branch = (Op == 7'b1100011) ? 1'b1 :
-                                         1'b0 ;
+    assign Branch = (Op == 7'b1100011) ? 1'b1 : 1'b0 ;
     assign ALUOp = (Op == 7'b0110011) ? 2'b10 :
                    (Op == 7'b1100011) ? 2'b01 :
                                         2'b00 ;
