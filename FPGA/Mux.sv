@@ -1,16 +1,16 @@
 module Mux (input logic [31:0]a,b,
-				input logic y,
-				output logic [31:0]c);
+				input logic c,
+				output logic [31:0]y);
 
-    assign c = (~y) ? a : b ;
+    assign y = (~c) ? a : b ;
     
 endmodule
 
 module mux_3_1 (a,b,c,y,d);
     input [31:0] a,b,c;
-    input [1:0] y;
-    output [31:0] d;
+    input [1:0] d;
+    output [31:0] y;
 
-    assign d = (y == 2'b00) ? a : (y == 2'b01) ? b : (y == 2'b10) ? c : 32'h00000000;
+    assign y = (d == 2'b00) ? a : (d == 2'b01) ? b : (d == 2'b10) ? c : 32'h00000000;
     
 endmodule

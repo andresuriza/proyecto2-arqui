@@ -3,8 +3,9 @@ module beetlejuice(input logic clk, rst);
     logic PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
     logic [2:0] ALUControlE;
     logic [4:0] RD_E, RD_M, RDW;
-    logic [31:0] PCTargetE, InstrD, PCD, PCPlus4D, ResultW, RD1_E, RD2_E, Imm_Ext_E, PCE, PCPlus4E, PCPlus4M, WriteDataM, ALU_ResultM;
-    logic [31:0] PCPlus4W, ALU_ResultW, ReadDataW;
+    logic [31:0] PCTargetE, InstrD, PCD, PCPlus4D, RD1_E, RD2_E, Imm_Ext_E, PCE, PCPlus4E, PCPlus4M;
+    logic [31:0] PCPlus4W;
+	 logic [18:0] ALU_ResultW, ReadDataW, WriteDataM, ALU_ResultM, ResultW;
     logic [4:0] RS1_E, RS2_E;
     logic [1:0] ForwardBE, ForwardAE;
     
@@ -72,7 +73,7 @@ module beetlejuice(input logic clk, rst);
                         .ForwardB_E(ForwardBE)
                     );
  
-    memory_cycle (
+    memory_cycle mem (
                         .clk(clk), 
                         .rst(rst), 
                         .RegWriteM(RegWriteM), 

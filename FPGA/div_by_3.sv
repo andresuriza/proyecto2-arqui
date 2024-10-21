@@ -1,7 +1,7 @@
 module div_by_3(a, c);
-    input [15:0] a;
-    output [15:0] c;
+    input [18:0] a;
+    output [18:0] c;
 
-    assign c = (a == 16'd1) ? 16'd0000000000000000 : ((a == 16'd2) ? 16'd1 : (a / 3));
+    assign c = (a == 19'd1) ? 19'd0000000000000000 : ((a == 19'd2) ? 19'd1 : (a / 3));
 	 
 endmodule

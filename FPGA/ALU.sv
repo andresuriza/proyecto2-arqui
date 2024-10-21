@@ -1,10 +1,10 @@
 module alu(
-    input logic[15:0]A,B,
+    input logic[18:0]A,B,
     input logic[2:0]ALUControl,
     output logic Carry,OverFlow,Zero,Negative,
-    output logic[15:0]Result);
+    output logic[18:0]Result);
 
-    logic [15:0] ResultSub, ResultAdd, ResultMul, ResultDiv, ResultAnd, ResultSLeft, ResultSRight;
+    logic [18:0] ResultSub, ResultAdd, ResultMul, ResultDiv, ResultAnd, ResultSLeft, ResultSRight;
 	 
 	 sub subDut(
 		.a(A),
@@ -53,7 +53,7 @@ module alu(
 									(ALUControl == 3'b100) ? ResultAnd :
                            (ALUControl == 3'b101) ? ResultSLeft:
 									(ALUControl == 3'b110) ? ResultSRight:
-									16'b0;
+									19'b0;
    
     assign Zero = &(~Result);
 

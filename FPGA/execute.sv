@@ -7,36 +7,37 @@ module execute(input logic clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,Bran
 							 input logic [1:0] ForwardA_E, ForwardB_E,
 							 output logic PCSrcE, RegWriteM, MemWriteM, ResultSrcM,
 							 output logic [4:0] RD_M,
-							 output logic [31:0] PCPlus4M, WriteDataM, ALU_ResultM,
+							 output logic [31:0] PCPlus4M,
+							 output logic [18:0] WriteDataM, ALU_ResultM,
 							 output logic [31:0] PCTargetE);
 
     logic [31:0] Src_A, Src_B_interim, Src_B;
-    logic [31:0] ResultE;
+    logic [18:0] ResultE, RD2_E_r, ResultE_r;
     logic ZeroE;
     logic RegWriteE_r, MemWriteE_r, ResultSrcE_r;
     logic [4:0] RD_E_r;
-    logic [31:0] PCPlus4E_r, RD2_E_r, ResultE_r;
+    logic [31:0] PCPlus4E_r; 
 
     mux_3_1 srca_mux (
                         .a(RD1_E),
                         .b(ResultW),
                         .c(ALU_ResultM),
-                        .y(ForwardA_E),
-                        .d(Src_A)
+                        .d(ForwardA_E),
+                        .y(Src_A)
                         );
 
     mux_3_1 srcb_mux (
                         .a(RD2_E),
                         .b(ResultW),
                         .c(ALU_ResultM),
-                        .y(ForwardB_E),
-                        .d(Src_B_interim)
+                        .d(ForwardB_E),
+                        .y(Src_B_interim)
                         );
     Mux alu_src_mux (
             .a(Src_B_interim),
             .b(Imm_Ext_E),
-            .y(ALUSrcE),
-            .c(Src_B)
+            .c(ALUSrcE),
+            .y(Src_B)
             );
 
     alu arith_lu (
@@ -63,8 +64,8 @@ module execute(input logic clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,Bran
             ResultSrcE_r <= 1'b0;
             RD_E_r <= 5'h00;
             PCPlus4E_r <= 32'h00000000; 
-            RD2_E_r <= 32'h00000000; 
-            ResultE_r <= 32'h00000000;
+            RD2_E_r <= 19'h00000000; 
+            ResultE_r <= 19'h00000000;
         end
         else begin
             RegWriteE_r <= RegWriteE; 

@@ -11,8 +11,8 @@ module fetch(input logic clk, rst,
 
     Mux pc_mux (.a(PCPlus4F),
                 .b(PCTargetE),
-                .y(PCSrcE),
-                .c(PC_F)
+                .c(PCSrcE),
+                .y(PC_F)
                 );
 					 
 

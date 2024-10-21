@@ -1,7 +1,7 @@
 module pipeline_tb();
 	logic clk, rst;
 	
-	beetlejuice b_p(clk, rst);
+	Pipeline_Top pip(clk, rst);
 
 	always #5 clk = ~clk;
 
@@ -11,5 +11,7 @@ module pipeline_tb();
 		#200
 		rst <= 1'b1;
 	end
+	
+	
 
 endmodule

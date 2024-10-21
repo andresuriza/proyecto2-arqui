@@ -1,6 +1,6 @@
 module shiftRight(a, c);
-    input [15:0] a;
-    output [15:0] c;
+    input [18:0] a;
+    output [18:0] c;
 
-	 assign c = (a == 16'b1) ? 16'b0 : (a >> 1);
+	 assign c = (a == 19'b1) ? 19'b0 : (a >> 1);
 endmodule
