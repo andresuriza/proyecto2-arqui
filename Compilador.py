@@ -156,9 +156,8 @@ def compilador(code):
 # Código de entrada
 code = """
 main:
-
-
-
+	bLb R0, R13, #20
+    	bLb R1, R14, #10
 	bAuipc R2, #100
 	bAuipc R3, #39700
 	bAuipc R4, #0
@@ -176,16 +175,15 @@ calculate_sector:
 
 auxiliar:
 	bAdd R10, R10, R3
-	bAuipc R14, #0
 	bJal R14, calculate_sector
 
 continue_main:
-
-
+	bAuipc R14, #0
+    	bLb R9, R14, #20
 
 	bSw R10, R9, #0
 
-
+	bLb R11, R14, #16020
 
 	bAuipc R12, #99
 
@@ -193,7 +191,10 @@ loop_100x2:
 	bAuipc R12, #99
 
 loop_matrices:
-
+	bLb R0, R10, #0
+	bLb R1, R10, #1
+	bLb R2, R10, #400
+	bLb R3, R10, #401
 
 	bAuipc R9, #3
 
@@ -215,14 +216,14 @@ loop_matrices:
 	bAuipc R13, #1
 	bSll R4, R0, R13
 	bAdd R4, R4, R1
-	bDiv R4, R4
+	bDiv R4, R4, R9
 
 	bSw R4, R11, #1
 
 	bAuipc R14, #1
 	bSll R5, R1, R14
 	bAdd R5, R5, R0
-	bDiv R5, R5
+	bDiv R5, R5, R9
 	
 	bSw R5, R11, #2
 	bSw R1, R11, #3
@@ -230,8 +231,94 @@ loop_matrices:
 	bAuipc R13, #1
 	bSll R4, R0, R13
 	bAdd R4, R4, R2
-	bDiv R4, R4
+	bDiv R4, R4, R9
 	bSw R4, R11, #396
+
+
+	bLb R5, R11, #1
+
+
+	bAuipc R14, #1
+	bSll R6, R5, R14
+	bAdd R6, R6, R1
+	bDiv R6, R6, R9
+	bSw R6, R11, #397
+
+	bAuipc R13, #1
+	bSll R7, R5, R13
+	bAdd R7, R7, R5
+	bDiv R7, R7, R9
+	bSw R7, R11, #398
+
+	bAuipc R14, #1
+	bSll R4, R1, R14
+	bAdd R4, R4, R3
+	bDiv R4, R4, R9
+	bSw R4, R11, #399
+
+	bAuipc R13, #1
+	bSll R5, R2, R13
+	bAdd R5, R5, R0
+	bDiv R5, R5, R9
+	bSw R5, R11, #792
+
+	bAuipc R14, #1
+	bSll R6, R5, R14
+	bAdd R6, R6, R2
+	bDiv R6, R6, R9
+	bSw R6, R11, #793
+
+	bAuipc R13, #1
+	bSll R7, R2, R13
+	bAdd R7, R7, R5
+	bDiv R7, R7, R9
+	bSw R7, R11, #794
+
+	bAuipc R14, #1
+	bSll R4, R3, R14
+	bAdd R4, R4, R1
+	bDiv R4, R4, R9
+	bSw R4, R11, #795
+
+	bSw R2, R11, #1188
+
+	bAuipc R13, #1
+	bSll R4, R2, R13
+	bAdd R4, R4, R3
+	bDiv R4, R4, R9
+	bSw R4, R11, #1189
+
+	bAuipc R14, #1
+	bSll R5, R3, R14
+	bAdd R5, R5, R2
+	bDiv R5, R5, R9
+	bSw R5, R11, #1190
+
+	bSw R3, R11, #1191
+
+	bAddi R10, R10, #1
+	bAuipc R13, #0
+
+	bLb R11, R13, #16020
+
+	bAuipc R13, #1
+	bSub R12, R12, R13
+	bAuipc R14, #0
+	bBne R12, R14, loop_matrices
+
+	bAdd R10, R10, #400
+	bAdd R11, R11, #1584
+
+	bAuipc R14, #0
+	bLb R9,  R14, #16020
+
+
+	bSw R11, R9, #0
+	bAuipc R13, #1
+	bSub R12, R12, R13
+	bAuipc R14, #0
+	bBne R12, R14, loop_100x2
+
 """
 
 # Generar instrucciones

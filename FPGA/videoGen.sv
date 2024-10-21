@@ -11,7 +11,7 @@ logic [8:0] j = 1;
 
     always_ff @(posedge clk) begin
         if (x >= 1 && x <= N && y >= 1 && y <= N) begin
-            address <= ((x - 1) * N) + (y - 1);
+            address <= ((x - 1) * N) + (y - 1) + 53;
             r <= q;
             g <= q;
             b <= q;
