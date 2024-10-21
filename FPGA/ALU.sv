@@ -1,12 +1,9 @@
-module ALU(
-    input logic [31:0]A,B,
-    input logic [2:0]ALUControl,
-    output logic Carry,OverFlow,Zero,Negative,
-    output logic [31:0]Result);
+module ALU(input logic [31:0]A,B,
+			 input logic [2:0]ALUControl,
+			 output logic Carry,OverFlow,Zero,Negative,
+			 output logic [31:0]Result);
 
-    //logic [15:0] ResultSub, ResultAdd, ResultMul, ResultDiv, ResultAnd, ResultSLeft, ResultSRight;
-	 
-	 logic Cout;
+    logic Cout;
     logic [31:0]Sum;
 
     assign Sum = (ALUControl[0] == 1'b0) ? A + B :

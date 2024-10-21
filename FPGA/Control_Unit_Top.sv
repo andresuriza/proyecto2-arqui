@@ -1,10 +1,10 @@
-module Control_Unit_Top(input logic [6:0] Op, funct7,
-								input logic [2:0] funct3,
-								output logic RegWrite,ALUSrc,MemWrite,ResultSrc,Branch,
-								output logic [1:0] ImmSrc,
-								output logic [2:0] ALUControl);
+module Control_Unit_Top(input logic [6:0]Op,funct7,
+								 input logic [2:0]funct3,
+								 output logic RegWrite,ALUSrc,MemWrite,ResultSrc,Branch,
+								 output logic [1:0]ImmSrc,
+								 output logic [2:0]ALUControl);
 
-    logic [1:0] ALUOp;
+    logic [1:0]ALUOp;
 
     Main_Decoder Main_Decoder(
                 .Op(Op),

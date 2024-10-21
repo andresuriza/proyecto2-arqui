@@ -1,6 +1,0 @@
-module mult(
-    input logic [15:0] a, b,
-    output logic [15:0] c);
-
-    assign c = a * b;
-endmodule

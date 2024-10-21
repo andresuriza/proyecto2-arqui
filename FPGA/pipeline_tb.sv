@@ -1,7 +1,7 @@
 module pipeline_tb();
 	logic clk, rst;
 	
-	pipeline_top pip(clk, rst);
+	Pipeline_Top pip(clk, rst);
 
 	always #5 clk = ~clk;
 

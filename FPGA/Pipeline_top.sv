@@ -1,5 +1,7 @@
-module pipeline_top(input logic clk, rst);
-	 logic PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
+module Pipeline_Top(input logic clk, rst);
+
+    // Declaration of Interim Wires
+    logic PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
     logic [2:0] ALUControlE;
     logic [4:0] RD_E, RD_M, RDW;
     logic [31:0] PCTargetE, InstrD, PCD, PCPlus4D, ResultW, RD1_E, RD2_E, Imm_Ext_E, PCE, PCPlus4E, PCPlus4M, WriteDataM, ALU_ResultM;
@@ -7,14 +9,20 @@ module pipeline_top(input logic clk, rst);
     logic [4:0] RS1_E, RS2_E;
     logic [1:0] ForwardBE, ForwardAE;
     
-    fetch_cycle Fetch (.clk(clk), 
-							  .rst(rst), 
-							  .PCSrcE(PCSrcE), 
-							  .PCTargetE(PCTargetE), 
-							  .InstrD(InstrD), 
-							  .PCD(PCD), 
-							  .PCPlus4D(PCPlus4D));
 
+    // Module Initiation
+    // Fetch Stage
+    fetch_cycle Fetch (
+                        .clk(clk), 
+                        .rst(rst), 
+                        .PCSrcE(PCSrcE), 
+                        .PCTargetE(PCTargetE), 
+                        .InstrD(InstrD), 
+                        .PCD(PCD), 
+                        .PCPlus4D(PCPlus4D)
+                    );
+
+    // Decode Stage
     decode_cycle Decode (
                         .clk(clk), 
                         .rst(rst), 
@@ -40,6 +48,7 @@ module pipeline_top(input logic clk, rst);
                         .RS2_E(RS2_E)
                     );
 
+    // Execute Stage
     execute_cycle Execute (
                         .clk(clk), 
                         .rst(rst), 
@@ -69,6 +78,7 @@ module pipeline_top(input logic clk, rst);
                         .ForwardB_E(ForwardBE)
                     );
     
+    // Memory Stage
     memory_cycle Memory (
                         .clk(clk), 
                         .rst(rst), 
@@ -87,6 +97,7 @@ module pipeline_top(input logic clk, rst);
                         .ReadDataW(ReadDataW)
                     );
 
+    // Write Back Stage
     writeback_cycle WriteBack (
                         .clk(clk), 
                         .rst(rst), 
@@ -97,6 +108,7 @@ module pipeline_top(input logic clk, rst);
                         .ResultW(ResultW)
                     );
 
+    // Hazard Unit
     hazard_unit Forwarding_block (
                         .rst(rst), 
                         .RegWriteM(RegWriteM), 

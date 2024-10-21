@@ -9,5 +9,4 @@ module Instruction_Memory(input logic rst,
   initial begin
     $readmemh("memfile.hex",mem);
   end
-
 endmodule

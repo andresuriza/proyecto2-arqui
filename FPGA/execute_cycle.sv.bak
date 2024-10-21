@@ -1,64 +1,47 @@
+// Copyright 2023 MERL-DSU
+
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+
+//        http://www.apache.org/licenses/LICENSE-2.0
+
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
 module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, ALUControlE, 
     RD1_E, RD2_E, Imm_Ext_E, RD_E, PCE, PCPlus4E, PCSrcE, PCTargetE, RegWriteM, MemWriteM, ResultSrcM, RD_M, PCPlus4M, WriteDataM, ALU_ResultM, ResultW, ForwardA_E, ForwardB_E);
 
-		//INPUTS
-    //RegWriteE: si se debe escribir en registro.
-	 //ALUSrcE: indica si segundo operando viene de registro o inmediato extendido.
-	 //MemWriteE: indica si se debe escribir en memoria, usado en store.
-	 //ResultSrcE: establece cuál resultado se usa para escribir en el registro, ya sea el proveniente de la ALU o de la memoria.
-	 //BranchE: indica si se debe de tomar un salto de acuerdo a la salida de la ALU.
-	 //ALUControlE: determina operación que realiza la ALU.
-	 //RD1E: operando 1.
-	 //RD2E: operando 2.
-	 //Imm_Ext_E: valor inmediato extendido.
-	 //RD_E: dirección del registro en el que se anota el resultado.
-	 //PCE: valor actual del contador del programa.
-	 //PCPlus4E: apunta a la siguiente instrucción, en caso de sin saltos.
-	 //ResultW: resultado de la escritura en la etapa anterior.
-	 //ForwardA_E, ForwardB_E: señales de control para evitar hazards de datos al enviar los resultados previos de la ALU como
-	 //operandos en la nueva etapa.
-	 
-		//OUTPUTS
-	 //PCSrcE: indica si el flujo de control cambia si el resultado de la ALU es cero y BranchE está activo.
-	 //RegWriteM: si se debe escribir en registro en la etapa de escritura.
-	 //MemWriteM: indica si se debe escribir en memoria, también almacenada en registro.
-	 //ResultSrcM: establece cuál resultado se usa para escribir en el registro, ya sea el proveniente de la ALU o de la memoria.
-	 //RD_M: dirección del registro en el que se anota el resultado.
-	 //PCPlus4M: apunta a la siguiente instrucción, en caso de sin saltos.
-	 //WriteDataM: datos que se escribirán en memoria, que son el segundo operando de la ALU.
-	 //ALU_ResultM: Resultado de la operación de la ALU.
-	 //PCTargetE: Dirección a la que se debe saltar, calculada a partir de PCE y Imm_Ext_E.
-	 
-		//WIRES
-	 //Src_A: Primer operando de la ALU.
-	 //Src_B_interim: Segundo operando intermedio antes de pasar a la ALU.
-    //Src_B: Segundo operando final para la ALU.
-    //ResultE: Resultado de la ALU.
-    //ZeroE: Bandera que indica si el resultado de la ALU es cero.
-	 
-	 input clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,BranchE;
+    // Declaration I/Os
+    input clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,BranchE;
     input [2:0] ALUControlE;
-    input [15:0] RD1_E, RD2_E, Imm_Ext_E;
+    input [31:0] RD1_E, RD2_E, Imm_Ext_E;
     input [4:0] RD_E;
-    input [15:0] PCE, PCPlus4E;
-    input [15:0] ResultW;
+    input [31:0] PCE, PCPlus4E;
+    input [31:0] ResultW;
     input [1:0] ForwardA_E, ForwardB_E;
 
     output PCSrcE, RegWriteM, MemWriteM, ResultSrcM;
     output [4:0] RD_M; 
-    output [15:0] PCPlus4M, WriteDataM, ALU_ResultM;
-    output [15:0] PCTargetE;
+    output [31:0] PCPlus4M, WriteDataM, ALU_ResultM;
+    output [31:0] PCTargetE;
 
-    wire [15:0] Src_A, Src_B_interim, Src_B;
-    wire [15:0] ResultE;
+    // Declaration of Interim Wires
+    wire [31:0] Src_A, Src_B_interim, Src_B;
+    wire [31:0] ResultE;
     wire ZeroE;
 
+    // Declaration of Register
     reg RegWriteE_r, MemWriteE_r, ResultSrcE_r;
     reg [4:0] RD_E_r;
-    reg [15:0] PCPlus4E_r, RD2_E_r, ResultE_r;
+    reg [31:0] PCPlus4E_r, RD2_E_r, ResultE_r;
 
-    //SrcA
-	 Mux_3_by_1 srca_mux (
+    // Declaration of Modules
+    // 3 by 1 Mux for Source A
+    Mux_3_by_1 srca_mux (
                         .a(RD1_E),
                         .b(ResultW),
                         .c(ALU_ResultM),
@@ -66,7 +49,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
                         .d(Src_A)
                         );
 
-    //SrcB_interim
+    // 3 by 1 Mux for Source B
     Mux_3_by_1 srcb_mux (
                         .a(RD2_E),
                         .b(ResultW),
@@ -74,7 +57,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
                         .s(ForwardB_E),
                         .d(Src_B_interim)
                         );
-    //srcB
+    // ALU Src Mux
     Mux alu_src_mux (
             .a(Src_B_interim),
             .b(Imm_Ext_E),
@@ -94,7 +77,7 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
             .Negative()
             );
 
-    // Adder branch
+    // Adder
     PC_Adder branch_adder (
             .a(PCE),
             .b(Imm_Ext_E),
@@ -108,9 +91,9 @@ module execute_cycle(clk, rst, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, Branch
             MemWriteE_r <= 1'b0; 
             ResultSrcE_r <= 1'b0;
             RD_E_r <= 5'h00;
-            PCPlus4E_r <= 16'h00000000; 
-            RD2_E_r <= 16'h00000000; 
-            ResultE_r <= 16'h00000000;
+            PCPlus4E_r <= 32'h00000000; 
+            RD2_E_r <= 32'h00000000; 
+            ResultE_r <= 32'h00000000;
         end
         else begin
             RegWriteE_r <= RegWriteE; 

@@ -1,11 +1,11 @@
-module Register_File(input logic clk, rst, WE3,
-							input logic [4:0] A1,A2,A3,
-							input logic [31:0] WD3,
-							output logic [31:0] RD1,RD2);
+module Register_File(input logic clk,rst,WE3,
+							input logic [4:0]A1,A2,A3,
+							input logic [31:0]WD3,
+							output logic [31:0]RD1,RD2);
 
     logic [31:0] Register [31:0];
 
-    always @(posedge clk)
+    always @ (posedge clk)
     begin
         if(WE3 & (A3 != 5'h00))
             Register[A3] <= WD3;

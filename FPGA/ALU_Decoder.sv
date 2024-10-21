@@ -1,7 +1,7 @@
-module ALU_Decoder(input logic [1:0] ALUOp,
-						 input logic [2:0] funct3,
-						 input logic [6:0] funct7,op,
-						 output logic [2:0] ALUControl);
+module ALU_Decoder(input logic [1:0]ALUOp,
+						 input logic [2:0]funct3,
+						 input logic [6:0]funct7,op,
+						 output logic [2:0]ALUControl);
 
     // Method 1 
     // assign ALUControl = (ALUOp == 2'b00) ? 3'b000 :
