@@ -1,4 +1,4 @@
-module Pipeline_top(input clk, rst);
+module pipeline_top(input logic clk, rst);
 	 logic PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
     logic [2:0] ALUControlE;
     logic [4:0] RD_E, RD_M, RDW;

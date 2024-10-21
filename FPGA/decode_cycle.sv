@@ -3,8 +3,8 @@ module decode_cycle(input logic clk, rst, RegWriteW,
 							input logic [31:0] InstrD, PCD, PCPlus4D, ResultW,
 							output logic RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE,
 							output logic [2:0] ALUControlE,
-							output logic [31:0] RD1_E, RD2_E, Imm_ExtE,
-							output logic [4:0] RD_E,
+							output logic [31:0] RD1_E, RD2_E, Imm_Ext_E,
+							output logic [4:0] RS1_E, RS2_E, RD_E,
 							output logic [31:0] PCE, PCPlus4E);
 
 		logic RegWriteD, ALUSrcD, MemWriteD, ResultSrcD, BranchD;
