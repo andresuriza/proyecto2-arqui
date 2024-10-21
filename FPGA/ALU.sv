@@ -1,4 +1,4 @@
-module ALU(
+module alu(
     input logic[15:0]A,B,
     input logic[2:0]ALUControl,
     output logic Carry,OverFlow,Zero,Negative,

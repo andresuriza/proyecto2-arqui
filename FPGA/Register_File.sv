@@ -1,4 +1,4 @@
-module Register_File(input logic clk,rst, WE3,
+module register_file(input logic clk,rst, WE3,
 							input logic [3:0] A1, A2, A3,
 							input logic [18:0] WD3,
 							output logic [18:0] RD1, RD2);

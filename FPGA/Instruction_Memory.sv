@@ -1,4 +1,4 @@
-module Instruction_Memory(input logic rst,
+module instruction_memory(input logic rst,
 								  input logic [31:0]A,
 								  output logic [31:0]RD);
 

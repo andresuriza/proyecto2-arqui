@@ -1,52 +1,14 @@
-// Copyright 2023 MERL-DSU
+module beetlejuice(input logic clk, rst);
 
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-
-//        http://www.apache.org/licenses/LICENSE-2.0
-
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-
-`include "Fetch_Cycle.v"
-`include "Decode_Cyle.v"
-`include "Execute_Cycle.v"
-`include "Memory_Cycle.v"
-`include "Writeback_Cycle.v"    
-`include "PC.v"
-`include "PC_Adder.v"
-`include "Mux.v"
-`include "Instruction_Memory.v"
-`include "Control_Unit_Top.v"
-`include "Register_File.v"
-`include "Sign_Extend.v"
-`include "ALU.v"
-`include "Data_Memory.v"
-`include "Hazard_unit.v"
-
-
-module Pipeline_top(clk, rst);
-
-    // Declaration of I/O
-    input clk, rst;
-
-    // Declaration of Interim Wires
-    wire PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
-    wire [2:0] ALUControlE;
-    wire [4:0] RD_E, RD_M, RDW;
-    wire [31:0] PCTargetE, InstrD, PCD, PCPlus4D, ResultW, RD1_E, RD2_E, Imm_Ext_E, PCE, PCPlus4E, PCPlus4M, WriteDataM, ALU_ResultM;
-    wire [31:0] PCPlus4W, ALU_ResultW, ReadDataW;
-    wire [4:0] RS1_E, RS2_E;
-    wire [1:0] ForwardBE, ForwardAE;
+    logic PCSrcE, RegWriteW, RegWriteE, ALUSrcE, MemWriteE, ResultSrcE, BranchE, RegWriteM, MemWriteM, ResultSrcM, ResultSrcW;
+    logic [2:0] ALUControlE;
+    logic [4:0] RD_E, RD_M, RDW;
+    logic [31:0] PCTargetE, InstrD, PCD, PCPlus4D, ResultW, RD1_E, RD2_E, Imm_Ext_E, PCE, PCPlus4E, PCPlus4M, WriteDataM, ALU_ResultM;
+    logic [31:0] PCPlus4W, ALU_ResultW, ReadDataW;
+    logic [4:0] RS1_E, RS2_E;
+    logic [1:0] ForwardBE, ForwardAE;
     
-
-    // Module Initiation
-    // Fetch Stage
-    fetch_cycle Fetch (
+    fetch Fetch (
                         .clk(clk), 
                         .rst(rst), 
                         .PCSrcE(PCSrcE), 
@@ -55,9 +17,8 @@ module Pipeline_top(clk, rst);
                         .PCD(PCD), 
                         .PCPlus4D(PCPlus4D)
                     );
-
-    // Decode Stage
-    decode_cycle Decode (
+						  
+    decode Decode (
                         .clk(clk), 
                         .rst(rst), 
                         .InstrD(InstrD), 
@@ -82,8 +43,7 @@ module Pipeline_top(clk, rst);
                         .RS2_E(RS2_E)
                     );
 
-    // Execute Stage
-    execute_cycle Execute (
+    execute Execute (
                         .clk(clk), 
                         .rst(rst), 
                         .RegWriteE(RegWriteE), 
@@ -111,9 +71,8 @@ module Pipeline_top(clk, rst);
                         .ForwardA_E(ForwardAE),
                         .ForwardB_E(ForwardBE)
                     );
-    
-    // Memory Stage
-    memory_cycle Memory (
+ 
+    memory_cycle (
                         .clk(clk), 
                         .rst(rst), 
                         .RegWriteM(RegWriteM), 
@@ -131,8 +90,7 @@ module Pipeline_top(clk, rst);
                         .ReadDataW(ReadDataW)
                     );
 
-    // Write Back Stage
-    writeback_cycle WriteBack (
+    writeback WriteBack (
                         .clk(clk), 
                         .rst(rst), 
                         .ResultSrcW(ResultSrcW), 
@@ -142,7 +100,6 @@ module Pipeline_top(clk, rst);
                         .ResultW(ResultW)
                     );
 
-    // Hazard Unit
     hazard_unit Forwarding_block (
                         .rst(rst), 
                         .RegWriteM(RegWriteM), 
