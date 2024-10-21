@@ -6,7 +6,7 @@ module writeback(input logic clk, rst, ResultSrcW,
 Mux result_mux (    
                 .a(ALU_ResultW),
                 .b(ReadDataW),
-                .s(ResultSrcW),
+                .y(ResultSrcW),
                 .c(ResultW)
                 );
 endmodule

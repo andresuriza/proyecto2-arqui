@@ -21,7 +21,7 @@ module execute(input logic clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,Bran
                         .a(RD1_E),
                         .b(ResultW),
                         .c(ALU_ResultM),
-                        .s(ForwardA_E),
+                        .y(ForwardA_E),
                         .d(Src_A)
                         );
 
@@ -29,13 +29,13 @@ module execute(input logic clk, rst, RegWriteE,ALUSrcE,MemWriteE,ResultSrcE,Bran
                         .a(RD2_E),
                         .b(ResultW),
                         .c(ALU_ResultM),
-                        .s(ForwardB_E),
+                        .y(ForwardB_E),
                         .d(Src_B_interim)
                         );
     Mux alu_src_mux (
             .a(Src_B_interim),
             .b(Imm_Ext_E),
-            .s(ALUSrcE),
+            .y(ALUSrcE),
             .c(Src_B)
             );
 
