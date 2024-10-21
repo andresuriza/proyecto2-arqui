@@ -40,34 +40,34 @@ module pipeline_top(input logic clk, rst);
                         .RS2_E(RS2_E)
                     );
 
-//    execute_cycle Execute (
-//                        .clk(clk), 
-//                        .rst(rst), 
-//                        .RegWriteE(RegWriteE), 
-//                        .ALUSrcE(ALUSrcE), 
-//                        .MemWriteE(MemWriteE), 
-//                        .ResultSrcE(ResultSrcE), 
-//                        .BranchE(BranchE), 
-//                        .ALUControlE(ALUControlE), 
-//                        .RD1_E(RD1_E), 
-//                        .RD2_E(RD2_E), 
-//                        .Imm_Ext_E(Imm_Ext_E), 
-//                        .RD_E(RD_E), 
-//                        .PCE(PCE), 
-//                        .PCPlus4E(PCPlus4E), 
-//                        .PCSrcE(PCSrcE), 
-//                        .PCTargetE(PCTargetE), 
-//                        .RegWriteM(RegWriteM), 
-//                        .MemWriteM(MemWriteM), 
-//                        .ResultSrcM(ResultSrcM), 
-//                        .RD_M(RD_M), 
-//                        .PCPlus4M(PCPlus4M), 
-//                        .WriteDataM(WriteDataM), 
-//                        .ALU_ResultM(ALU_ResultM),
-//                        .ResultW(ResultW),
-//                        .ForwardA_E(ForwardAE),
-//                        .ForwardB_E(ForwardBE)
-//                    );
+    execute_cycle Execute (
+                        .clk(clk), 
+                        .rst(rst), 
+                        .RegWriteE(RegWriteE), 
+                        .ALUSrcE(ALUSrcE), 
+                        .MemWriteE(MemWriteE), 
+                        .ResultSrcE(ResultSrcE), 
+                        .BranchE(BranchE), 
+                        .ALUControlE(ALUControlE), 
+                        .RD1_E(RD1_E), 
+                        .RD2_E(RD2_E), 
+                        .Imm_Ext_E(Imm_Ext_E), 
+                        .RD_E(RD_E), 
+                        .PCE(PCE), 
+                        .PCPlus4E(PCPlus4E), 
+                        .PCSrcE(PCSrcE), 
+                        .PCTargetE(PCTargetE), 
+                        .RegWriteM(RegWriteM), 
+                        .MemWriteM(MemWriteM), 
+                        .ResultSrcM(ResultSrcM), 
+                        .RD_M(RD_M), 
+                        .PCPlus4M(PCPlus4M), 
+                        .WriteDataM(WriteDataM), 
+                        .ALU_ResultM(ALU_ResultM),
+                        .ResultW(ResultW),
+                        .ForwardA_E(ForwardAE),
+                        .ForwardB_E(ForwardBE)
+                    );
     
     memory_cycle Memory (
                         .clk(clk), 

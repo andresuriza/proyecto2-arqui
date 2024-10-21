@@ -11,7 +11,7 @@ module decode_cycle(input logic clk, rst, RegWriteW,
 		logic [1:0] ImmSrcD;
 		logic [2:0] ALUControlD, ALUControlD_r;
 		logic [31:0] RD1_D, RD2_D, Imm_Ext_D, RD1_D_r, RD2_D_r, Imm_Ext_D_r;
-		logic [4:0] RD_D_r;
+		logic [4:0] RD_D_r, RS1_D_r, RS2_D_r;
 		logic RegWriteD_r, ALUSrcD_r, MemWriteD_r, ResultSrcD_r, BranchD_r;
 		logic [31:0] PCD_r, PCPlus4D_r;
 							
@@ -73,16 +73,18 @@ module decode_cycle(input logic clk, rst, RegWriteW,
 	end
 	
 	assign RegWriteE = RegWriteD_r;
-	assign ALUSrcE = ALUSrcD_r;
-	assign MemWriteE = MemWriteD_r;
-	assign ResultSrcE = ResultSrcD_r;
-	assign BranchE = BranchD_r;
-	assign ALUControlE = ALUControlD_r;
-	assign RD1_E = RD1_D_r;
-	assign RD2_E = RD2_D_r;
-	assign Imm_Ext_E = Imm_Ext_D_r;
-	assign RD_E = RD_D_r;
-	assign PCD_E = PCD_r;
-	assign PCPlus4E = PCPlus4D_r;
+    assign ALUSrcE = ALUSrcD_r;
+    assign MemWriteE = MemWriteD_r;
+    assign ResultSrcE = ResultSrcD_r;
+    assign BranchE = BranchD_r;
+    assign ALUControlE = ALUControlD_r;
+    assign RD1_E = RD1_D_r;
+    assign RD2_E = RD2_D_r;
+    assign Imm_Ext_E = Imm_Ext_D_r;
+    assign RD_E = RD_D_r;
+    assign PCE = PCD_r;
+    assign PCPlus4E = PCPlus4D_r;
+    assign RS1_E = RS1_D_r;
+    assign RS2_E = RS2_D_r;
 							
 endmodule

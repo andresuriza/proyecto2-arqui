@@ -7,7 +7,7 @@ module Mux (input logic [31:0] a,b,
 endmodule
 
 
-module Mux_3_by_1 (input logic [31:0] a, b, c,
+module Mux_3_by_1 (input logic [31:0] a,b,c,
 						 input logic [1:0] s,
 						 output logic [31:0] d);
 

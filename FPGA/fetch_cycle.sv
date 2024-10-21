@@ -23,7 +23,7 @@ module fetch_cycle(input logic clk, rst, PCSrcE,
 							 .b(32'h4),
 							 .c(PCPlus4F));
 							 
-	always_ff @(posedge clk or negedge rst) begin
+	always @(posedge clk or negedge rst) begin
 		if(rst == 1'b0) begin
 			InstrF_reg <= 32'h0;
 			PCF_reg <= 32'h0;
