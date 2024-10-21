@@ -7,49 +7,40 @@ module decode_cycle(input logic clk, rst, RegWriteW,
 							 output logic [4:0] RS1_E, RS2_E, RD_E,
 							 output logic [31:0] PCE, PCPlus4E);
 
-    // Declare Interim Wires
     logic RegWriteD,ALUSrcD,MemWriteD,ResultSrcD,BranchD;
     logic [1:0] ImmSrcD;
     logic [2:0] ALUControlD;
     logic [31:0] RD1_D, RD2_D, Imm_Ext_D;
 
-    // Declaration of Interim Register
     logic RegWriteD_r,ALUSrcD_r,MemWriteD_r,ResultSrcD_r,BranchD_r;
     logic [2:0] ALUControlD_r;
     logic [31:0] RD1_D_r, RD2_D_r, Imm_Ext_D_r;
     logic [4:0] RD_D_r, RS1_D_r, RS2_D_r;
     logic [31:0] PCD_r, PCPlus4D_r;
 
-
-    // Initiate the modules
-    // Control Unit
     Control_Unit_Top control (
-                            .Op(InstrD[6:0]),
+                            .Op(InstrD[3:0]), // Opcode
                             .RegWrite(RegWriteD),
                             .ImmSrc(ImmSrcD),
                             .ALUSrc(ALUSrcD),
                             .MemWrite(MemWriteD),
                             .ResultSrc(ResultSrcD),
                             .Branch(BranchD),
-                            .funct3(InstrD[14:12]),
-                            .funct7(InstrD[31:25]),
                             .ALUControl(ALUControlD)
                             );
-
-    // Register File
     Register_File rf (
                         .clk(clk),
                         .rst(rst),
                         .WE3(RegWriteW),
                         .WD3(ResultW),
-                        .A1(InstrD[19:15]),
-                        .A2(InstrD[24:20]),
+                        .A1(InstrD[23:20]),
+                        .A2(InstrD[19:16]),
                         .A3(RDW),
                         .RD1(RD1_D),
                         .RD2(RD2_D)
                         );
 
-    // Sign Extension
+// Calcula inmediato								
     Sign_Extend extension (
                         .In(InstrD[31:0]),
                         .Imm_Ext(Imm_Ext_D),
@@ -84,11 +75,11 @@ module decode_cycle(input logic clk, rst, RegWriteW,
             RD1_D_r <= RD1_D; 
             RD2_D_r <= RD2_D; 
             Imm_Ext_D_r <= Imm_Ext_D;
-            RD_D_r <= InstrD[11:7];
+            RD_D_r <= InstrD[7:4];
             PCD_r <= PCD; 
             PCPlus4D_r <= PCPlus4D;
-            RS1_D_r <= InstrD[19:15];
-            RS2_D_r <= InstrD[24:20];
+            RS1_D_r <= InstrD[23:20];
+            RS2_D_r <= InstrD[19:16];
         end
     end
 

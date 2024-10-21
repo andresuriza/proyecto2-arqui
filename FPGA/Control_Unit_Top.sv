@@ -1,5 +1,4 @@
-module Control_Unit_Top(input logic [6:0]Op,funct7,
-								 input logic [2:0]funct3,
+module Control_Unit_Top(input logic [3:0]Op,
 								 output logic RegWrite,ALUSrc,MemWrite,ResultSrc,Branch,
 								 output logic [1:0]ImmSrc,
 								 output logic [2:0]ALUControl);
@@ -19,8 +18,6 @@ module Control_Unit_Top(input logic [6:0]Op,funct7,
 
     ALU_Decoder ALU_Decoder(
                             .ALUOp(ALUOp),
-                            .funct3(funct3),
-                            .funct7(funct7),
                             .op(Op),
                             .ALUControl(ALUControl)
     );
