@@ -1,13 +1,12 @@
- %mcode to create a mif file
-    src = imread('Dacia-Sandero.jpg');
+    src = imread('imagen.jpg'); % Imagen
     gray = rgb2gray(src);
-    [m,n] = size( gray ); %size of your picture
+    [m,n] = size(gray);
 
-    N = m*n; %your ram or rom depth。
+    N = m*n;
     word_len = 8;
-    data = reshape(gray, 1, N);% reshape you picture's data
+    data = reshape(gray, 1, N);
 
-    fid=fopen('gray_image2.mif', 'w'); % open mif file
+    fid=fopen('gray_image.mif', 'w');
     fprintf(fid, 'DEPTH=%d;\n', N);
     fprintf(fid, 'WIDTH=%d;\n', word_len);
 
@@ -16,7 +15,7 @@
     fprintf(fid, 'CONTENT\t');
     fprintf(fid, 'BEGIN\n');
     for i = 0 : N-1
-    fprintf(fid, '\t%d\t:\t%x;\n',i, data(i+1));
+    fprintf(fid, '\t%d\t:\t%x;\n',i+53, data(i+1));
     end
-    fprintf(fid, 'END;\n'); % prinf the end
-    fclose(fid); % close your file
+    fprintf(fid, 'END;\n');
+    fclose(fid);

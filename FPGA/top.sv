@@ -1,4 +1,4 @@
-module top(input logic clk, 
+module top(input logic clk, rst, 
 				output logic vgaclk, // 25.175 MHz VGA clock
 			  output logic hsync, vsync,
 			  output logic sync_b, blank_b, // To monitor 
@@ -14,6 +14,6 @@ module top(input logic clk,
 
 	cpuram mem(address_a, address_b, vgaclk, data_a, data_b, 0, 0, q_a, q_b);	  
 	vga vga_module(clk, q_a, vgaclk, hsync, vsync, sync_b, blank_b, r, g, b, address_a);
-	procesador cpu(clk, q_b, address_b);
+	beetlejuice b_p(clk, rst);
 
 endmodule
